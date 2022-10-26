@@ -13,14 +13,24 @@ public class Cliente {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nome;
+    private String endereco;
 
     public Cliente() {
 
     }
 
-    public Cliente(Long id, String nome) {
+    public Cliente(Long id, String nome, String endereco) {
         this.id = id;
         this.nome = nome;
+        this.endereco = endereco;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
     }
 
     public Long getId() {

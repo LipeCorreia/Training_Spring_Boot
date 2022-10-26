@@ -37,5 +37,19 @@ public class Controller {
         return repository.findAll();
     }
 
+    @PutMapping("/atualize/{id}")
+    public String updateClienteById(@RequestBody ClienteDTO clienteDTO, @PathVariable Long id){
+        Optional<Cliente> velhoCLiente = repository.findById(id);
+        if(velhoCLiente.isPresent()){
+            Cliente cliente = velhoCLiente.get();
+            cliente.setEndereco(clienteDTO.getEndereco());
+            repository.save(cliente);
+            return "Cliente de ID " + cliente.getId() + " atualizado com sucesso!!";
+
+        }else{
+           return "CLiente de ID " + id + " não existe";
+        }
+
+    }
 
 }

@@ -1,4 +1,4 @@
-package system.demo;
+package system.demo.dto;
 
 public class ClienteDTO {
 

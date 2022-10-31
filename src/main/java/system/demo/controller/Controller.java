@@ -1,7 +1,10 @@
-package system.demo;
+package system.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import system.demo.entity.Cliente;
+import system.demo.dto.ClienteDTO;
+import system.demo.repository.Repository;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +18,7 @@ public class Controller {
     Repository repository;
 
     @PostMapping
-    public  Cliente create(@RequestBody Cliente cliente){
+    public Cliente create(@RequestBody Cliente cliente){
         Cliente clienteSaved = repository.save(cliente);
         return clienteSaved;
     }

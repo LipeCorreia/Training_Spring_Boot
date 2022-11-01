@@ -31,8 +31,19 @@ public class Controller {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCLienteById(@PathVariable Long id){
-        repository.deleteById(id);
+    public String deleteCLienteById(@PathVariable Long id){
+        try{
+           Optional <Cliente> cliente = Optional.of(repository.getById(id));
+            if(cliente != null){
+                repository.deleteById(id);
+                return "Cliente de " + id + " deletado com sucesso!";
+            }else{
+                throw new Exception("Cliente inexistente!");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return "O cliente de id: " + id + " não existe para ser deletado!" + " Por favor, entre em contato com o atendimento 888 888 888";
+        }
     }
 
     @GetMapping

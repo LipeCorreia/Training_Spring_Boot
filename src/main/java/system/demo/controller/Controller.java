@@ -1,11 +1,13 @@
 package system.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import system.demo.entity.Cliente;
 import system.demo.dto.ClienteDTO;
 import system.demo.repository.Repository;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,7 +54,7 @@ public class Controller {
     }
 
     @PutMapping("/atualize/{id}")
-    public String updateClienteById(@RequestBody ClienteDTO clienteDTO, @PathVariable Long id){
+    public String updateClienteById(@RequestBody @Valid ClienteDTO clienteDTO, @PathVariable Long id){
         Optional<Cliente> velhoCLiente = repository.findById(id);
         if(velhoCLiente.isPresent()){
             Cliente cliente = velhoCLiente.get();

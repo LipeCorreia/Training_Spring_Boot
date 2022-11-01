@@ -20,13 +20,7 @@ public class Produto {
     public Produto(String nome, Double precoUnitario, Double precoTotal, Integer quantidade) {
         this.nome = nome;
         this.precoUnitario = precoUnitario;
-        Double total = precoUnitario * quantidade;
-        if(precoTotal == total){
-            this.precoTotal = precoTotal;
-        }else {
-            this.precoTotal = total;
-        }
-        this.quantidade = quantidade;
+        this.precoTotal = precoTotal;
 
     }
 

@@ -5,6 +5,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import system.demo.entity.Cliente;
 import system.demo.dto.ClienteDTO;
+import system.demo.entity.Produto;
 import system.demo.repository.Repository;
 
 import javax.validation.Valid;
@@ -20,7 +21,10 @@ public class Controller {
     Repository repository;
 
     @PostMapping
-    public Cliente create(@RequestBody Cliente cliente){
+    public Cliente create(@RequestBody @Valid Cliente cliente){
+        for(Produto p : cliente.getProdutos()){
+            p.setPrecoTotal(p.getPrecoTotal() * p.getQuantidade());
+        }
         Cliente clienteSaved = repository.save(cliente);
         return clienteSaved;
     }

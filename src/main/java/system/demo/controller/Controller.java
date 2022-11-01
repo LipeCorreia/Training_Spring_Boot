@@ -1,8 +1,13 @@
-package system.demo;
+package system.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import system.demo.entity.Cliente;
+import system.demo.dto.ClienteDTO;
+import system.demo.repository.Repository;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +20,7 @@ public class Controller {
     Repository repository;
 
     @PostMapping
-    public  Cliente create(@RequestBody Cliente cliente){
+    public Cliente create(@RequestBody Cliente cliente){
         Cliente clienteSaved = repository.save(cliente);
         return clienteSaved;
     }
@@ -28,8 +33,19 @@ public class Controller {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCLienteById(@PathVariable Long id){
-        repository.deleteById(id);
+    public String deleteCLienteById(@PathVariable Long id){
+        try{
+           Optional <Cliente> cliente = Optional.of(repository.getById(id));
+            if(cliente != null){
+                repository.deleteById(id);
+                return "Cliente de " + id + " deletado com sucesso!";
+            }else{
+                throw new Exception("Cliente inexistente!");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return "O cliente de id: " + id + " não existe para ser deletado!" + " Por favor, entre em contato com o atendimento 888 888 888";
+        }
     }
 
     @GetMapping
@@ -38,7 +54,7 @@ public class Controller {
     }
 
     @PutMapping("/atualize/{id}")
-    public String updateClienteById(@RequestBody ClienteDTO clienteDTO, @PathVariable Long id){
+    public String updateClienteById(@RequestBody @Valid ClienteDTO clienteDTO, @PathVariable Long id){
         Optional<Cliente> velhoCLiente = repository.findById(id);
         if(velhoCLiente.isPresent()){
             Cliente cliente = velhoCLiente.get();
